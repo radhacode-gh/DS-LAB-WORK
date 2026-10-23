@@ -1,0 +1,152 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int coeff, pow;
+    struct node *next;
+};
+
+// Create a polynomial
+struct node* create()
+{
+    struct node *head = NULL, *temp, *newnode;
+    int n, i;
+
+    printf("Enter number of terms: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++)
+    {
+        newnode = (struct node*)malloc(sizeof(struct node));
+
+        printf("Enter coefficient and power: ");
+        scanf("%d%d", &newnode->coeff, &newnode->pow);
+
+        newnode->next = NULL;
+
+        if (head == NULL)
+            head = newnode;
+        else
+            temp->next = newnode;
+
+        temp = newnode;
+    }
+    return head;
+}
+
+// Display polynomial
+void display(struct node *head)
+{
+    while (head != NULL)
+    {
+        printf("%dx^%d", head->coeff, head->pow);
+        head = head->next;
+        if (head != NULL)
+            printf(" + ");
+    }
+    printf("\n");
+}
+
+// Add two polynomials
+struct node* add(struct node *p1, struct node *p2)
+{
+    struct node *head = NULL, *temp = NULL, *newnode;
+    int c, p;
+
+    while (p1 != NULL && p2 != NULL)
+    {
+        if (p1->pow == p2->pow)
+        {
+            c = p1->coeff + p2->coeff;
+            p = p1->pow;
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        else if (p1->pow > p2->pow)
+        {
+            c = p1->coeff;
+            p = p1->pow;
+            p1 = p1->next;
+        }
+        else
+        {
+            c = p2->coeff;
+            p = p2->pow;
+            p2 = p2->next;
+        }
+
+        if (c != 0)
+        {
+            newnode = (struct node*)malloc(sizeof(struct node));
+            newnode->coeff = c;
+            newnode->pow = p;
+            newnode->next = NULL;
+
+            if (head == NULL)
+                head = newnode;
+            else
+                temp->next = newnode;
+
+            temp = newnode;
+        }
+    }
+
+    while (p1 != NULL)
+    {
+        newnode = (struct node*)malloc(sizeof(struct node));
+        newnode->coeff = p1->coeff;
+        newnode->pow = p1->pow;
+        newnode->next = NULL;
+
+        if (head == NULL)
+            head = newnode;
+        else
+            temp->next = newnode;
+
+        temp = newnode;
+        p1 = p1->next;
+    }
+
+    while (p2 != NULL)
+    {
+        newnode = (struct node*)malloc(sizeof(struct node));
+        newnode->coeff = p2->coeff;
+        newnode->pow = p2->pow;
+        newnode->next = NULL;
+
+        if (head == NULL)
+            head = newnode;
+        else
+            temp->next = newnode;
+
+        temp = newnode;
+        p2 = p2->next;
+    }
+
+    return head;
+}
+
+int main()
+{
+    struct node *p1, *p2, *sum;
+
+    printf("Enter first polynomial:\n");
+    p1 = create();
+
+    printf("Enter second polynomial:\n");
+    p2 = create();
+
+    printf("First polynomial: ");
+    display(p1);
+
+    printf("Second polynomial: ");
+    display(p2);
+
+    sum = add(p1, p2);
+
+    printf("Sum of polynomials: ");
+    display(sum);
+
+    return 0;
+}
