@@ -1,1 +1,86 @@
+#include <stdio.h>
 
+#define MAX_SIZE 100
+
+// Function to print the array
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Insertion Functions
+int insertAtBeginning(int arr[], int *size, int element) {
+    if (*size >= MAX_SIZE) return -1;
+    for (int i = *size; i > 0; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[0] = element;
+    (*size)++;
+    return 0;
+}
+
+int insertAtEnd(int arr[], int *size, int element) {
+    if (*size >= MAX_SIZE) return -1;
+    arr[*size] = element;
+    (*size)++;
+    return 0;
+}
+
+int insertAtPosition(int arr[], int *size, int element, int pos) {
+    if (*size >= MAX_SIZE || pos < 0 || pos > *size) return -1;
+    for (int i = *size; i > pos; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[pos] = element;
+    (*size)++;
+    return 0;
+}
+
+// Deletion Functions
+int deleteFromBeginning(int arr[], int *size) {
+    if (*size <= 0) return -1;
+    for (int i = 0; i < *size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    (*size)--;
+    return 0;
+}
+
+int deleteFromEnd(int arr[], int *size) {
+    if (*size <= 0) return -1;
+    (*size)--;
+    return 0;
+}
+
+int deleteFromPosition(int arr[], int *size, int pos) {
+    if (*size <= 0 || pos < 0 || pos >= *size) return -1;
+    for (int i = pos; i < *size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    (*size)--;
+    return 0;
+}
+
+int main() {
+    int arr[MAX_SIZE] = {10, 20, 30, 40};
+    int size = 4;
+
+    printf("Original Array: ");
+    printArray(arr, size);
+
+    insertAtBeginning(arr, &size, 5);
+    printf("After Insertion at Beginning: ");
+    printArray(arr, size);
+
+    insertAtPosition(arr, &size, 25, 3);
+    printf("After Insertion at Position 3: ");
+    printArray(arr, size);
+
+    deleteFromPosition(arr, &size, 2);
+    printf("After Deletion from Position 2: ");
+    printArray(arr, size);
+
+    return 0;
+}
