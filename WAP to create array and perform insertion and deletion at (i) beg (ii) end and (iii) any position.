@@ -1,0 +1,217 @@
+
+#include <stdio.h>
+
+int main()
+{
+    int arr[100], n, i, choice, pos, value;
+
+    // Input the size of the array
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    // Input array elements
+    printf("Enter the array elements:\n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+
+    do
+    {
+        printf("\n\n--- ARRAY OPERATIONS ---\n");
+        printf("1. Insertion at Beginning\n");
+        printf("2. Insertion at End\n");
+        printf("3. Insertion at Any Position\n");
+        printf("4. Deletion from Beginning\n");
+        printf("5. Deletion from End\n");
+        printf("6. Deletion from Any Position\n");
+        printf("7. Display Array\n");
+        printf("8. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            // INSERTION AT BEGINNING
+            case 1:
+                if (n >= 100)
+                {
+                    printf("Array is full!\n");
+                    break;
+                }
+
+                printf("Enter the value to insert: ");
+                scanf("%d", &value);
+
+                // Shift all elements one position to the right
+                // Start from the last element to avoid overwriting data
+                for (i = n; i > 0; i--)
+                {
+                    arr[i] = arr[i - 1];
+                }
+
+                // Insert the new value at index 0
+                arr[0] = value;
+
+                // Increase the number of elements
+                n++;
+
+                printf("Element inserted at beginning.\n");
+                break;
+
+            // INSERTION AT END
+            case 2:
+                if (n >= 100)
+                {
+                    printf("Array is full!\n");
+                    break;
+                }
+
+                printf("Enter the value to insert: ");
+                scanf("%d", &value);
+
+                // Insert the value at the next free index
+                arr[n] = value;
+
+                // Increase the number of elements
+                n++;
+
+                printf("Element inserted at end.\n");
+                break;
+
+            // INSERTION AT ANY POSITION
+            case 3:
+                if (n >= 100)
+                {
+                    printf("Array is full!\n");
+                    break;
+                }
+
+                printf("Enter the position (1 to %d): ", n + 1);
+                scanf("%d", &pos);
+
+                // Check whether the position is valid
+                if (pos < 1 || pos > n + 1)
+                {
+                    printf("Invalid position!\n");
+                    break;
+                }
+
+                printf("Enter the value to insert: ");
+                scanf("%d", &value);
+
+                // Shift elements right from the end
+                // until the required position becomes empty
+                for (i = n; i >= pos; i--)
+                {
+                    arr[i] = arr[i - 1];
+                }
+
+                // Insert the value at the required position
+                // Convert 1-based position to 0-based array index
+                arr[pos - 1] = value;
+
+                // Increase the array size
+                n++;
+
+                printf("Element inserted successfully.\n");
+                break;
+
+            // DELETION FROM BEGINNING
+            case 4:
+                if (n == 0)
+                {
+                    printf("Array is empty!\n");
+                    break;
+                }
+
+                // Shift every element one position to the left
+                // This overwrites the first element
+                for (i = 0; i < n - 1; i++)
+                {
+                    arr[i] = arr[i + 1];
+                }
+
+                // Decrease the number of elements
+                n--;
+
+                printf("Element deleted from beginning.\n");
+                break;
+
+            // DELETION FROM END
+            case 5:
+                if (n == 0)
+                {
+                    printf("Array is empty!\n");
+                    break;
+                }
+
+                // Decrease the logical size of the array
+                // The last element is no longer part of the array
+                n--;
+
+                printf("Element deleted from end.\n");
+                break;
+
+            // DELETION FROM ANY POSITION
+            case 6:
+                if (n == 0)
+                {
+                    printf("Array is empty!\n");
+                    break;
+                }
+
+                printf("Enter the position to delete (1 to %d): ", n);
+                scanf("%d", &pos);
+
+                // Check whether the position is valid
+                if (pos < 1 || pos > n)
+                {
+                    printf("Invalid position!\n");
+                    break;
+                }
+
+                // Shift elements left starting from the deleted position
+                // Each element is replaced by the next element
+                for (i = pos - 1; i < n - 1; i++)
+                {
+                    arr[i] = arr[i + 1];
+                }
+
+                // Reduce the logical size by one
+                n--;
+
+                printf("Element deleted successfully.\n");
+                break;
+
+            // DISPLAY ARRAY
+            case 7:
+                if (n == 0)
+                {
+                    printf("Array is empty!\n");
+                }
+                else
+                {
+                    printf("Array elements are: ");
+                    for (i = 0; i < n; i++)
+                    {
+                        printf("%d ", arr[i]);
+                    }
+                    printf("\n");
+                }
+                break;
+
+            // EXIT
+            case 8:
+                printf("Exiting program.\n");
+                break;
+
+            default:
+                printf("Invalid choice! Try again.\n");
+        }
+
+    } while (choice != 8);
+
+    return 0;
+}
