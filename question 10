@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 5
+
+int a[MAX], front = -1, rear = -1;
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+struct node *f = NULL, *r = NULL;
+
+// Insert using array
+void insertArray()
+{
+    int x;
+    if (rear == MAX - 1)
+    {
+        printf("Queue is full\n");
+        return;
+    }
+    printf("Enter data: ");
+    scanf("%d", &x);
+    if (front == -1)
+        front = 0;
+    a[++rear] = x;
+}
+
+// Delete using array
+void deleteArray()
+{
+    if (front == -1 || front > rear)
+    {
+        printf("Queue is empty\n");
+        return;
+    }
+    printf("Deleted element: %d\n", a[front++]);
+    if (front > rear)
+        front = rear = -1;
+}
+
+// Display array queue
+void displayArray()
+{
+    int i;
+    if (front == -1)
+    {
+        printf("Queue is empty\n");
+        return;
+    }
+    for (i = front; i <= rear; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+}
+
+// Insert using linked list
+void insertList()
+{
+    struct node *newnode;
+    int x;
+    newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    printf("Enter data: ");
+    scanf("%d", &x);
+    newnode->data = x;
+    newnode->next = NULL;
+    if (r == NULL)
+        f = r = newnode;
+    else
+    {
+        r->next = newnode;
+        r = newnode;
+    }
+}
+
+// Delete using linked list
+void deleteList()
+{
+    struct node *temp;
+    if (f == NULL)
+    {
+        printf("Queue is empty\n");
+        return;
+    }
+    temp = f;
+    printf("Deleted element: %d\n", temp->data);
+    f = f->next;
+    if (f == NULL)
+        r = NULL;
+    free(temp);
+}
+
+// Display linked list queue
+void displayList()
+{
+    struct node *temp = f;
+    if (f == NULL)
+    {
+        printf("Queue is empty\n");
+        return;
+    }
+    while (temp != NULL)
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main()
+{
+    int ch;
+    do
+    {
+        printf("\n1.Insert in Array Queue");
+        printf("\n2.Delete from Array Queue");
+        printf("\n3.Display Array Queue");
+        printf("\n4.Insert in Linked List Queue");
+        printf("\n5.Delete from Linked List Queue");
+        printf("\n6.Display Linked List Queue");
+        printf("\n7.Exit");
+        printf("\nEnter choice: ");
+        scanf("%d", &ch);
+
+        switch (ch)
+        {
+            case 1: insertArray(); break;
+            case 2: deleteArray(); break;
+            case 3: displayArray(); break;
+            case 4: insertList(); break;
+            case 5: deleteList(); break;
+            case 6: displayList(); break;
+            case 7: printf("Exit\n"); break;
+            default: printf("Wrong choice\n");
+        }
+    } while (ch != 7);
+
+    return 0;
+}
