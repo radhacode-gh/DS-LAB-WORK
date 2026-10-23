@@ -1,0 +1,128 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 5
+
+int a[MAX], top = -1;
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+struct node *head = NULL;
+
+// Push using array
+void pushArray()
+{
+    int x;
+    if (top == MAX - 1)
+    {
+        printf("Stack overflow\n");
+        return;
+    }
+    printf("Enter data: ");
+    scanf("%d", &x);
+    a[++top] = x;
+}
+
+// Pop using array
+void popArray()
+{
+    if (top == -1)
+        printf("Stack underflow\n");
+    else
+        printf("Deleted element: %d\n", a[top--]);
+}
+
+// Display array stack
+void displayArray()
+{
+    int i;
+    if (top == -1)
+        printf("Stack is empty\n");
+    else
+    {
+        for (i = top; i >= 0; i--)
+            printf("%d\n", a[i]);
+    }
+}
+
+// Push using linked list
+void pushList()
+{
+    struct node *newnode;
+    int x;
+    newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    printf("Enter data: ");
+    scanf("%d", &x);
+    newnode->data = x;
+    newnode->next = head;
+    head = newnode;
+}
+
+// Pop using linked list
+void popList()
+{
+    struct node *temp;
+    if (head == NULL)
+    {
+        printf("Stack underflow\n");
+        return;
+    }
+    temp = head;
+    printf("Deleted element: %d\n", temp->data);
+    head = head->next;
+    free(temp);
+}
+
+// Display linked list stack
+void displayList()
+{
+    struct node *temp = head;
+    if (head == NULL)
+        printf("Stack is empty\n");
+    else
+    {
+        while (temp != NULL)
+        {
+            printf("%d\n", temp->data);
+            temp = temp->next;
+        }
+    }
+}
+
+int main()
+{
+    int ch;
+    do
+    {
+        printf("\n1.Push using Array");
+        printf("\n2.Pop using Array");
+        printf("\n3.Display Array Stack");
+        printf("\n4.Push using Linked List");
+        printf("\n5.Pop using Linked List");
+        printf("\n6.Display Linked List Stack");
+        printf("\n7.Exit");
+        printf("\nEnter choice: ");
+        scanf("%d", &ch);
+
+        switch (ch)
+        {
+            case 1: pushArray(); break;
+            case 2: popArray(); break;
+            case 3: displayArray(); break;
+            case 4: pushList(); break;
+            case 5: popList(); break;
+            case 6: displayList(); break;
+            case 7: printf("Exit\n"); break;
+            default: printf("Wrong choice\n");
+        }
+    } while (ch != 7);
+
+    return 0;
+}
